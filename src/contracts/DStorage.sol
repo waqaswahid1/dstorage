@@ -20,12 +20,22 @@ contract DStorage {
 
 
   // Event
+  event fileUploaded(
+    uint fileID,
+    string fileHash,
+    uint fileSize,
+    string fileType,
+    string fileName,
+    string fileDescription,
+    uint uploadTime,
+    address payable uploader    
+  );
 
   constructor() public {
   }
 
-  // Upload File function
-  function uploadFile(
+  
+  function FileUploade(
     string memory _fileHash,
     uint _fileSize,
     string memory _fileType,
@@ -34,8 +44,7 @@ contract DStorage {
 
     public {
 
-    fileCount ++;
-    files[fileCount] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
+    
     // Make sure the file hash exists
     require(bytes(_fileHash).length>0);
     // Make sure file type exists
@@ -49,12 +58,11 @@ contract DStorage {
         // Make sure file size is more than 0
     require(_fileSize>0);
     
+    fileCount ++;
 
-
-    // Increment file id
-
-    // Add File to the contract
-
-    // Trigger an event
+    files[fileCount] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
+   
+    emit fileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender);
     }
+
 }
